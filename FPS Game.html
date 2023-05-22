@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FPS Fighting Game</title>
+    <style>
+        /* CSS styling for the game canvas */
+        #gameCanvas {
+            width: 800px;
+            height: 600px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        // JavaScript code for the game functionalities
+        window.onload = function() {
+            // Get the game canvas
+            var canvas = document.getElementById("gameCanvas");
+            var ctx = canvas.getContext("2d");
+
+            // Set up game variables
+            var playerX = canvas.width / 2;
+            var playerY = canvas.height / 2;
+            var playerSpeed = 5;
+
+            // Handle keyboard input
+            document.addEventListener("keydown", keyDownHandler, false);
+            document.addEventListener("keyup", keyUpHandler, false);
+
+            var rightPressed = false;
+            var leftPressed = false;
+            var upPressed = false;
+            var downPressed = false;
+
+            function keyDownHandler(event) {
+                if (event.key === "Right" || event.key === "ArrowRight")
+                    rightPressed = true;
+                else if (event.key === "Left" || event.key === "ArrowLeft")
+                    leftPressed = true;
+                else if (event.key === "Up" || event.key === "ArrowUp")
+                    upPressed = true;
+                else if (event.key === "Down" || event.key === "ArrowDown")
+                    downPressed = true;
+            }
+
+            function keyUpHandler(event) {
+                if (event.key === "Right" || event.key === "ArrowRight")
+                    rightPressed = false;
+                else if (event.key === "Left" || event.key === "ArrowLeft")
+                    leftPressed = false;
+                else if (event.key === "Up" || event.key === "ArrowUp")
+                    upPressed = false;
+                else if (event.key === "Down" || event.key === "ArrowDown")
+                    downPressed = false;
+            }
+
+            // Update game state
+            function update() {
+                // Move the player based on input
+                if (rightPressed && playerX < canvas.width)
+                    playerX += playerSpeed;
+                else if (leftPressed && playerX > 0)
+                    playerX -= playerSpeed;
+                else if (upPressed && playerY > 0)
+                    playerY -= playerSpeed;
+                else if (downPressed && playerY < canvas.height)
+                    playerY += playerSpeed;
+
+                // Clear canvas and draw the player
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillRect(playerX, playerY, 50, 50);
+
+                requestAnimationFrame(update);
+            }
+
+            // Start the game loop
+            update();
+        }
+    </script>
+</body>
+</html>
